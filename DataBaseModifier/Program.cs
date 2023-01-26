@@ -12,6 +12,7 @@ public class Program
         var records = CsvFileReader<OriginalVievModel>.Read(Path.Combine(args), ",");
         
         CsvFileWriter<SubViewModel>.Write(Path.Combine(args[0], OutputPrefix + args[1]), ",", records
+            .Where(record => record.Radio == "GSM")
             .Select(
                 record =>
                     new SubViewModel
