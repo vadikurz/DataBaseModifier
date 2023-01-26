@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseModifier", "DataBaseModifier\DataBaseModifier.csproj", "{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
