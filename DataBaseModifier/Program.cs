@@ -10,6 +10,7 @@ public class Program
     public static void Main(string[] args)
     {
         var records = CsvFileReader<OriginalVievModel>.Read(Path.Combine(args), ",");
+        
         CsvFileWriter<SubViewModel>.Write(Path.Combine(args[0], OutputPrefix + args[1]), ",", records
             .Select(
                 record =>
