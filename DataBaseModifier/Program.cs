@@ -5,22 +5,23 @@ namespace DataBaseModifier;
 public class Program
 {
     private const string OutputPrefix = "modified";
-
+    
+    /// <param name="args">args[0] is the path to file, args[1] is the file name</param>
     public static void Main(string[] args)
     {
-        var records = CsvFileReader<OriginalVievModel>.Read(Path.Combine(args[0], args[1]), ",");
+        var records = CsvFileReader<OriginalVievModel>.Read(Path.Combine(args), ",");
         CsvFileWriter<SubViewModel>.Write(Path.Combine(args[0], OutputPrefix + args[1]), ",", records
             .Select(
-                obj =>
+                record =>
                     new SubViewModel
                     {
-                        Radio = obj.Radio,
-                        MCC = obj.MCC,
-                        MNC = obj.MNC,
-                        LAC_TAC_NID = obj.LAC_TAC_NID,
-                        CID = obj.CID,
-                        LongitudeEW = obj.LongitudeEW,
-                        LongitudeNS = obj.LongitudeNS
+                        Radio = record.Radio,
+                        MCC = record.MCC,
+                        MNC = record.MNC,
+                        LAC_TAC_NID = record.LAC_TAC_NID,
+                        CID = record.CID,
+                        LongitudeEW = record.LongitudeEW,
+                        LongitudeNS = record.LongitudeNS
                     }));
     }
 }
