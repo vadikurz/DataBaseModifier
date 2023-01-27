@@ -12,8 +12,8 @@ public class OriginalVievModel
     public double LongitudeNS { get; set; }
     public int Range { get; set; }
     public int Samples { get; set; }
-    public bool Changeable { get; set; }
-    public uint Created { get; set; }
-    public uint Updated { get; set; }
+    public int Changeable { get; set; }
+    public long Created { get; set; }
+    public long Updated { get; set; }
     public int AverageSignal { get; set; }
 }
