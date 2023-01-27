@@ -13,11 +13,11 @@ public class CsvFileReader<T> where T : new()
 
         while ((line = streamReader.ReadLine()) != null)
         {
-            yield return ConstructObjectFromLine(line, delimiter);
+            yield return CreateObjectFromLine(line, delimiter);
         }
     }
 
-    private static T ConstructObjectFromLine(string line, string delimiter)
+    private static T CreateObjectFromLine(string line, string delimiter)
     {
         var array = line.Split(delimiter);
         
