@@ -1,20 +1,30 @@
 ﻿using System.Globalization;
-using CsvHelper;
-using CsvHelper.Configuration;
 
 namespace DataBaseModifier;
 
-public class CsvFileReader<T>
+public class CsvFileReader<T> where T : new()
 {
+    private static readonly IFormatProvider Formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+
     public static IEnumerable<T> Read(string path, string delimiter)
     {
-        using var streamReader = new StreamReader(path);
-        var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
-            { Delimiter = delimiter, HasHeaderRecord = false };
+        using var streamReader = File.OpenText(path);
+        string line;
 
-        using var csvReader = new CsvReader(streamReader, csvConfig);
-        foreach (var record in csvReader.GetRecords<T>())
+        while ((line = streamReader.ReadLine()) != null)
         {
+            var array = line.Split(delimiter);
+
+            var record = new T();
+            var propertiesOfInstance = record.GetType().GetProperties();
+
+            for (var i = 0; i < propertiesOfInstance.Length; i++)
+            {
+                var value = Convert.ChangeType(array[i], propertiesOfInstance[i].PropertyType, Formatter);
+
+                propertiesOfInstance[i].SetValue(record, value);
+            }
+
             yield return record;
         }
     }
