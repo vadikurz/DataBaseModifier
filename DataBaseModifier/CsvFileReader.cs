@@ -20,7 +20,9 @@ public class CsvFileReader<T> where T : new()
     private static T ConstructObjectFromLine(string line, string delimiter)
     {
         var array = line.Split(delimiter);
+        
         var record = new T();
+        
         var propertiesOfInstance = record.GetType().GetProperties();
 
         for (var i = 0; i < propertiesOfInstance.Length; i++)
