@@ -1,6 +1,6 @@
 ﻿namespace DataBaseModifier.Models;
 
-public class OriginalVievModel
+public struct OriginalVievModel
 {
     public string Radio { get; set; }
     public int MCC { get; set; }

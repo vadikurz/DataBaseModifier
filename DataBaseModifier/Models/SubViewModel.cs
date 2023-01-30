@@ -1,8 +1,7 @@
 ﻿namespace DataBaseModifier.Models;
 
-public class SubViewModel
+public struct SubViewModel
 {
-    public string Radio { get; set; }
     public int MCC { get; set; }
     public int MNC { get; set; }
     public int LAC_TAC_NID { get; set; }
