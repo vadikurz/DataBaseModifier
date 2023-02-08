@@ -1,17 +1,20 @@
 ﻿using System.Globalization;
+using System.IO.Compression;
 using System.Text;
 
 namespace DataBaseModifier;
 
 public class CsvHelper
 {
-    public void ReadAndWrite(string inputPath,string outputPath, char delimiter)
+    public void ReadAndWrite(GZipStream stream,string originalFileOutputPath,string modifiedFileOutputPath,  char delimiter)
     { 
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
         
-        using var streamReader = File.OpenText(inputPath);
-        using var fileStream = File.OpenWrite(outputPath);
-        using var streamWriter = new StreamWriter(fileStream);
+        using var streamReader = new StreamReader(stream);
+        using var modifiedFileStream = File.OpenWrite(modifiedFileOutputPath);
+        using var originalFileStream = File.OpenWrite(originalFileOutputPath);
+        using var modifiedStreamWriter = new StreamWriter(modifiedFileStream);
+        using var originalStreamWriter = new StreamWriter(originalFileStream);
         
         string line;
         var resultLine = new StringBuilder();
@@ -25,6 +28,8 @@ public class CsvHelper
 
         while ((line = streamReader.ReadLine()) != null)
         {
+            originalStreamWriter.WriteLine(line);
+            
             resultLine.Clear();
             
             var firstDelimiter = line.IndexOf(delimiter);
@@ -79,7 +84,7 @@ public class CsvHelper
             
             resultLine.Append(LongitudeNS);
 
-            streamWriter.WriteLine(resultLine);
+            modifiedStreamWriter.WriteLine(resultLine);
         }
     }
 
