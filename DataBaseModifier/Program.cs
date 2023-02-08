@@ -1,4 +1,4 @@
-﻿using Downloader;
+﻿using System.IO.Compression;
 
 namespace DataBaseModifier;
 
@@ -9,24 +9,36 @@ public class Program
     /// <param name="args">args[0] is the path to file, args[1] is the file name</param>
     public static async Task Main(string[] args)
     {
-        string path, fileName;
+        string path, fileName, token;
+
+        var defaultPath = Environment.CurrentDirectory;
+        var defaultFileName = "257.csv.gz";
+        var defaultToken = "pk.f48f741b488ae7c9a645c3fb04171bef";
 
         if (args.Length == 0)
         {
-            path = Environment.CurrentDirectory;
-            fileName = "257.csv";
+            path = defaultPath;
+            fileName = defaultFileName;
+            token = defaultToken;
         }
         else if (args.Length == 1)
         {
             path = args[0];
-            fileName = "257.csv";
+            fileName = defaultFileName;
+            token = defaultToken;
+        }
+        else if (args.Length == 2)
+        {
+            path = args[0];
+            fileName = args[1];
+            token = defaultToken;
         }
         else
         {
             path = args[0];
             fileName = args[1];
+            token = args[2];
         }
-
 
         if (!Directory.Exists(path))
         {
@@ -34,16 +46,21 @@ public class Program
             Environment.Exit(-1);
         }
 
-        if (!fileName.EndsWith(".csv"))
+        if (!fileName.EndsWith(".gz"))
         {
-            Console.WriteLine("Usage: Downloader.exe [<filename>]");
-            Environment.Exit(-1);
+            throw new ArgumentException("Expected (*.gz)", nameof(fileName));
         }
 
-        using var service = new OpenCellidService();
-        await service.DownloadAndDecompressAsync("257.csv.gz", path);
+        var client = new HttpClient();
+
+        var url = $"https://opencellid.org/ocid/downloads?token={token}&type=mcc&file={fileName}";
+
+        await using var stream = await client.GetStreamAsync(url);
+        await using var decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
 
         var csvHelper = new CsvHelper();
-        csvHelper.ReadAndWrite(Path.Combine(path, fileName), Path.Combine(path, OutputPrefix + fileName), ',');
+
+        csvHelper.ReadAndWrite(decompressionStream, Path.Combine(path, fileName[..^".gz".Length]),
+            Path.Combine(path, OutputPrefix + fileName[..^".gz".Length]), ',');
     }
 }
