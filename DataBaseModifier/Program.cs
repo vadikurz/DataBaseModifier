@@ -6,7 +6,7 @@ public class Program
 {
     private const string OutputPrefix = "modified";
 
-    /// <param name="args">args[0] is the path to file, args[1] is the file name</param>
+    /// <param name="args">args[0] is the path to file, args[1] is the file name, args[2] is the token</param>
     public static async Task Main(string[] args)
     {
         string path, fileName, token;
