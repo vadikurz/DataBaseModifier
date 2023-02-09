@@ -44,7 +44,5 @@ public class Program
 
         await csvHelper.ReadAndWrite(decompressionStream, Path.Combine(path, fileName[..^".gz".Length]),
            Path.Combine(path, OutputPrefix + fileName[..^".gz".Length]), ',');
-           await csvHelper.ReadAndWrite(decompressionStream, path+"257.csv",
-          path + "modified257.csv", ',');
     }
 }
