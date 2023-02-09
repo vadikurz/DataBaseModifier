@@ -12,8 +12,8 @@ public class CsvHelper
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
         using var streamReader = new StreamReader(stream);
-        await using var modifiedStreamWriter = new StreamWriter(modifiedFileOutputPath);
-        await using var originalStreamWriter = new StreamWriter(originalFileOutputPath);
+        await using var modifiedStreamWriter = File.CreateText(modifiedFileOutputPath);
+        await using var originalStreamWriter = File.CreateText(originalFileOutputPath);
 
 
         var resultLine = new StringBuilder();
