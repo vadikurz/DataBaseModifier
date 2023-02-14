@@ -10,7 +10,6 @@ public class ConsoleBackgroundService : BackgroundService
         {
             await Task.Delay(1000, stoppingToken);
             Console.WriteLine("task running...");
-            
         }
     }
 }
