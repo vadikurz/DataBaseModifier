@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseModifier", "DataBas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService", "ConsoleService\ConsoleService.csproj", "{E0BE37D7-3014-4002-8FD5-9807A2EB080F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
