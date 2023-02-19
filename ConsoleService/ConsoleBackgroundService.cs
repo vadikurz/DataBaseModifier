@@ -15,8 +15,8 @@ public class ConsoleBackgroundService : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            await Task.Delay(1000, stoppingToken);
             logger.LogInformation("task running...");
+            await Task.Delay(1000, stoppingToken);
         }
     }
 }
