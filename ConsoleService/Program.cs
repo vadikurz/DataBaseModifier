@@ -1,21 +1,14 @@
 ﻿using ConsoleService;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 public class Program
 {
     public static async Task Main(string[] args)
     {
-        var service = new ConsoleBackgroundService();
-
-        var cancellationTokenSource = new CancellationTokenSource();
-        var token = cancellationTokenSource.Token;
-
-        await service.StartAsync(token);
-
-        while (Console.ReadKey().Key != ConsoleKey.X)
-        {
-            
-        }
+        var host = Host.CreateDefaultBuilder()
+            .ConfigureServices(services => services.AddHostedService<ConsoleBackgroundService>()).Build();
         
-        cancellationTokenSource.Cancel();
+        await host.RunAsync();
     }
 }
