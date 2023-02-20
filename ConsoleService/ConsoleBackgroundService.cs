@@ -5,22 +5,22 @@ namespace ConsoleService;
 
 public class ConsoleBackgroundService : BackgroundService
 {
-    private ILogger<ConsoleBackgroundService> logger;
-    private bool ready;
+    private readonly ILogger<ConsoleBackgroundService> logger;
+    private readonly IHostApplicationLifetime lifetime;
 
     public ConsoleBackgroundService(ILogger<ConsoleBackgroundService> logger, IHostApplicationLifetime lifeTime)
     {
         this.logger = logger;
-        lifeTime.ApplicationStarted.Register(() => ready = true);
+        this.lifetime = lifeTime;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!ready)
+        if (!await WaitForAppStartup(stoppingToken))
         {
-            await Task.Delay(1000, stoppingToken);
+            return;
         }
-        
+
         while (!stoppingToken.IsCancellationRequested)
         {
             logger.LogInformation("task running...");
@@ -28,17 +28,19 @@ public class ConsoleBackgroundService : BackgroundService
         }
     }
     
-    private async Task<bool> WaitForAppStartup(IHostApplicationLifetime appLifetime, CancellationToken stoppingToken)
+    private async Task<bool> WaitForAppStartup(CancellationToken stoppingToken)
     {
         var startedSource = new TaskCompletionSource();
         var cancelledSource = new TaskCompletionSource();
 
-        await using var reg1 = appLifetime.ApplicationStarted.Register(() => startedSource.SetResult());
+        await using var reg1 = lifetime.ApplicationStarted.Register(() => startedSource.SetResult());
         await using var reg2 = stoppingToken.Register(() => cancelledSource.SetResult());
 
+        Console.WriteLine(Environment.CurrentManagedThreadId);
+        
         var completedTask = await Task.WhenAny(
             startedSource.Task,
-            cancelledSource.Task).ConfigureAwait(false);
+            cancelledSource.Task);
         
         return completedTask == startedSource.Task;
     }
