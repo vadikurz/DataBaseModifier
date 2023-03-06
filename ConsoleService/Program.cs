@@ -1,6 +1,7 @@
-﻿using ConsoleService;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+namespace ConsoleService;
 
 public class Program
 {
@@ -10,7 +11,8 @@ public class Program
             .ConfigureServices(services =>
             {
                 services.AddHostedService<ConsoleBackgroundService>();
-                services.AddSingleton<IUdpServer>(provider => new UdpServer("127.0.0.1", 22220));
+                services.AddSingleton<IUdpSender>(provider => new UdpSender("127.0.0.1", 22220));
+                services.AddSingleton<IUdpReceiver>(provider => new UdpReceiver(22220));
             })
             .Build();
 

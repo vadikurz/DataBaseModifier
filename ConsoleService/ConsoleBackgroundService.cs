@@ -5,12 +5,14 @@ namespace ConsoleService;
 public class ConsoleBackgroundService : BackgroundService
 {
     private readonly IHostApplicationLifetime lifetime;
-    private readonly IUdpServer server;
+    private readonly IUdpSender sender;
+    private readonly IUdpReceiver receiver;
 
-    public ConsoleBackgroundService(IHostApplicationLifetime lifetime, IUdpServer server)
+    public ConsoleBackgroundService(IHostApplicationLifetime lifetime, IUdpSender sender, IUdpReceiver receiver)
     {
         this.lifetime = lifetime;
-        this.server = server;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,9 +24,9 @@ public class ConsoleBackgroundService : BackgroundService
         
         while (!stoppingToken.IsCancellationRequested)
         {
-            Task.Run(server.ReceiveAsync);
-
-            await server.SendAsync();
+            await sender.SendAsync();
+            await receiver.ReceiveAsync();
+            
             await Task.Delay(1000, stoppingToken);
         }
     }
