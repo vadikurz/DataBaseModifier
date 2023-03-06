@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace ConsoleService;
 
@@ -7,9 +8,9 @@ public class UdpSender : IUdpSender, IDisposable
 {
     private readonly UdpClient client;
 
-    public UdpSender(string ipAddress, int port)
+    public UdpSender(IOptions<UdpSettings> settings)
     {
-        client = new UdpClient(ipAddress, port);
+        client = new UdpClient(settings.Value.Ip, settings.Value.Port);
     }
     
     public async Task SendAsync()
