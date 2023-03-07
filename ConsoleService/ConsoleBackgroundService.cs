@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ConsoleService;
 
@@ -7,12 +8,14 @@ public class ConsoleBackgroundService : BackgroundService
     private readonly IHostApplicationLifetime lifetime;
     private readonly IUdpSender sender;
     private readonly IUdpReceiver receiver;
+    private readonly ILogger<ConsoleBackgroundService> logger;
 
-    public ConsoleBackgroundService(IHostApplicationLifetime lifetime, IUdpSender sender, IUdpReceiver receiver)
+    public ConsoleBackgroundService(IHostApplicationLifetime lifetime, IUdpSender sender, IUdpReceiver receiver, ILogger<ConsoleBackgroundService> logger)
     {
         this.lifetime = lifetime;
         this.sender = sender;
         this.receiver = receiver;
+        this.logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -25,7 +28,10 @@ public class ConsoleBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             await sender.SendAsync(DateTimeOffset.Now.ToString());
-            await receiver.ReceiveAsync();
+
+            var receivedMessage = await receiver.ReceiveAsync();
+            
+            logger.LogInformation(receivedMessage);
             
             await Task.Delay(1000, stoppingToken);
         }

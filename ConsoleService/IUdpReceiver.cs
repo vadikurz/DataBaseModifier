@@ -2,5 +2,5 @@
 
 public interface IUdpReceiver
 {
-    public Task ReceiveAsync();
+    public Task<string> ReceiveAsync();
 }

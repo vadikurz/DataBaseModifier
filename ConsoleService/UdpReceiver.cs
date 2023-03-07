@@ -14,12 +14,12 @@ public class UdpReceiver : IUdpReceiver, IDisposable
         client = new UdpClient(settings.Value.Port);
     }
 
-    public async Task ReceiveAsync()
+    public async Task<string> ReceiveAsync()
     {
         var result = await client.ReceiveAsync();
         var message = Encoding.UTF8.GetString(result.Buffer);
-        
-        Console.WriteLine(message);
+
+        return message;
     }
 
     public void Dispose() => client.Dispose();
