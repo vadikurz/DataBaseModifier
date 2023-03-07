@@ -2,5 +2,5 @@
 
 public interface IUdpSender
 {
-    public Task SendAsync();
+    public Task SendAsync(string message);
 }

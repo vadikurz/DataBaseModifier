@@ -24,7 +24,7 @@ public class ConsoleBackgroundService : BackgroundService
         
         while (!stoppingToken.IsCancellationRequested)
         {
-            await sender.SendAsync();
+            await sender.SendAsync(DateTimeOffset.Now.ToString());
             await receiver.ReceiveAsync();
             
             await Task.Delay(1000, stoppingToken);

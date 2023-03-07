@@ -14,9 +14,8 @@ public class UdpSender : IUdpSender, IDisposable
         client = new UdpClient(settings.Value.Ip, settings.Value.Port);
     }
     
-    public async Task SendAsync()
+    public async Task SendAsync(string message)
     {
-        var message = DateTimeOffset.Now.ToString();
         var data = Encoding.UTF8.GetBytes(message);
 
         await client.SendAsync(data);
