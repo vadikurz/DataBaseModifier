@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Text;
+using ConsoleService.Settings;
 using Microsoft.Extensions.Options;
 
 namespace ConsoleService;

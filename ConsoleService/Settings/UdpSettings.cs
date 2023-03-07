@@ -1,4 +1,4 @@
-﻿namespace ConsoleService;
+﻿namespace ConsoleService.Settings;
 
 public class UdpSettings
 {
