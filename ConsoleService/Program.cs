@@ -1,4 +1,5 @@
-﻿using ConsoleService.Settings;
+﻿using ConsoleService.Services;
+using ConsoleService.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,9 +18,8 @@ public class Program
             .ConfigureServices(services =>
             {
                 services.Configure<UdpSettings>(configuration.GetSection("UdpSettings"));
-                services.AddHostedService<ConsoleBackgroundService>();
-                services.AddSingleton<IUdpSender, UdpSender>();
-                services.AddSingleton<IUdpReceiver, UdpReceiver>();
+                services.AddHostedService<UdpSender>();
+                services.AddHostedService<UdpReceiver>();
             })
             .Build();
 
