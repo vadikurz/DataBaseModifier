@@ -18,6 +18,7 @@ public class Program
             .ConfigureServices(services =>
             {
                 services.Configure<UdpSettings>(configuration.GetSection("UdpSettings"));
+                services.Configure<DataSourceSettings>(configuration.GetSection("DataSourceSettings"));
                 services.AddHostedService<UdpSender>();
                 services.AddHostedService<UdpReceiver>();
             })
