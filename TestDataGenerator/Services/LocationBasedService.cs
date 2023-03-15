@@ -34,14 +34,14 @@ public class LocationBasedService
         return listOfObjectCoordinates;
     }
 
-    public List<LBSParameters> GetLbsParametersOfNearestTowers(List<Point> listOfObjectCoordinates,
+    public List<LbsParameters> GetLbsParametersOfNearestTowers(List<Point> listOfObjectCoordinates,
         List<TowerParameters> listOfTowerParameters) => 
         listOfObjectCoordinates
             .Select(objectCoordinates => listOfTowerParameters
                 .MinBy(towerParameters => CalculateDistance(towerParameters.Latitude, objectCoordinates.Latitude,
                     towerParameters.Longitude, objectCoordinates.Longitude)))
             .Select(towerParameters =>
-                new LBSParameters(towerParameters.MCC, towerParameters.MNC, towerParameters.LAC_TAC_NID, towerParameters.CID))
+                new LbsParameters(towerParameters.MCC, towerParameters.MNC, towerParameters.LAC_TAC_NID, towerParameters.CID))
             .ToList();
     
 
