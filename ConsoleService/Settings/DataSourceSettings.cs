@@ -2,5 +2,5 @@
 
 public class DataSourceSettings
 {
-    public string FilePath { get; set; }
+    public string ObjectCoordinatesFilePath { get; set; }
 }
