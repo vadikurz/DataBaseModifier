@@ -1,5 +1,5 @@
 ﻿using System.Net.Sockets;
-using System.Text;
+using ConsoleService.Models;
 using ConsoleService.Settings;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -9,26 +9,47 @@ namespace ConsoleService.Services;
 public class UdpSender : ApplicationBackgroundService
 {
     private readonly UdpClient _client;
-    private readonly StreamReader _streamReader;
+    private readonly string _pathToObjectPoints;
 
-    public UdpSender(IHostApplicationLifetime lifetime, IOptions<UdpSettings> udpSettings, IOptions<DataSourceSettings> dataSourceSettings) : base(lifetime)
+    public UdpSender(IHostApplicationLifetime lifetime, IOptions<UdpSettings> udpSettings,
+        IOptions<DataSourceSettings> dataSourceSettings) : base(lifetime)
     {
         _client = new UdpClient(udpSettings.Value.Ip, udpSettings.Value.Port);
-        _streamReader = File.OpenText(dataSourceSettings.Value.FilePath);
+        _pathToObjectPoints = dataSourceSettings.Value.ObjectCoordinatesFilePath;
     }
 
     protected override async Task ExecuteOnApplicationStartAsync(CancellationToken stoppingToken)
     {
+        var objectPoints = await GetListOfObjectPoints(_pathToObjectPoints);
+
         while (!stoppingToken.IsCancellationRequested)
         {
-            while (await _streamReader.ReadLineAsync() is { } line)
+            for (var i = 0; i < objectPoints.Count; i++)
             {
-                var data = Encoding.UTF8.GetBytes(line);
-                
+                var data = objectPoints[i].Serialize();
+
                 await _client.SendAsync(data, stoppingToken);
-                
-                await Task.Delay(1000, stoppingToken);
+
+                if (i == objectPoints.Count - 1) continue;
+
+                var timeBetweenPoints = objectPoints[i + 1].TimeStamp.Subtract(objectPoints[i].TimeStamp);
+
+                await Task.Delay(timeBetweenPoints, stoppingToken);
             }
         }
+    }
+
+    private async Task<List<Point>> GetListOfObjectPoints(string pathToObjectCoordinates)
+    {
+        var listOfObjectCoordinates = new List<Point>();
+
+        var streamReader = File.OpenText(pathToObjectCoordinates);
+
+        while (await streamReader.ReadLineAsync() is { } line)
+        {
+            listOfObjectCoordinates.Add(Point.Parse(line));
+        }
+
+        return listOfObjectCoordinates;
     }
 }
