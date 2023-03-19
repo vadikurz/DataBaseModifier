@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ConsoleService.Models;
 
-public record Point(DateTime TimeStamp, double Latitude, double Longitude, int NumberOfSatellites, int Mcc, int Mnc, int LacTacNid, int Cid)
+public record Point(DateTimeOffset TimeStamp, double Latitude, double Longitude, int NumberOfSatellites, int Mcc, int Mnc, int LacTacNid, int Cid)
 {
     public static bool TryParse(string line, out Point point)
     {
@@ -16,7 +16,7 @@ public record Point(DateTime TimeStamp, double Latitude, double Longitude, int N
         
         var parameters = line.Split(delimiter);
 
-        if (!DateTime.TryParse(parameters[0], CultureInfo.InvariantCulture, DateTimeStyles.None,  out var timeStamp))
+        if (!DateTimeOffset.TryParse(parameters[0], CultureInfo.InvariantCulture, DateTimeStyles.None,  out var timeStamp))
             return false;
         
         if (!double.TryParse(parameters[1],style, formatter , out var latitude))
