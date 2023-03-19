@@ -47,7 +47,8 @@ public class UdpSender : ApplicationBackgroundService
 
         while (await streamReader.ReadLineAsync() is { } line)
         {
-            listOfObjectCoordinates.Add(Point.Parse(line));
+            if (Point.TryParse(line, out var point))
+                listOfObjectCoordinates.Add(point);
         }
 
         return listOfObjectCoordinates;
