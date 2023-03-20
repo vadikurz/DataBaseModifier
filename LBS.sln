@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService", "ConsoleSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataGenerator", "TestDataGenerator\TestDataGenerator.csproj", "{6310B392-28B8-4210-B718-00053142E4CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LBSTests", "LBSTests\LBSTests.csproj", "{808FECF7-E368-4092-9726-B146034B97F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService.Unit.Tests", "ConsoleService.Unit.Tests\ConsoleService.Unit.Tests.csproj", "{808FECF7-E368-4092-9726-B146034B97F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
