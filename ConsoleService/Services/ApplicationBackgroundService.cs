@@ -18,10 +18,10 @@ public abstract class ApplicationBackgroundService : BackgroundService
             return;
         }
 
-        await ExecuteOnApplicationStartAsync(stoppingToken);
+        await ExecuteInternalAsync(stoppingToken);
     }
 
-    protected abstract Task ExecuteOnApplicationStartAsync(CancellationToken stoppingToken);
+    protected abstract Task ExecuteInternalAsync(CancellationToken stoppingToken);
 
     private async Task<bool> WaitForAppStartup(CancellationToken stoppingToken)
     {
