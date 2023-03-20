@@ -3,26 +3,25 @@ using System.Text;
 
 namespace ConsoleService.Models;
 
-public record Point(DateTimeOffset TimeStamp, double Latitude, double Longitude, int NumberOfSatellites, int Mcc, int Mnc, int LacTacNid, int Cid)
+public record Point(DateTime TimeStamp, double Lat, double Lng, int NumberOfSatellites, int Mcc, int Mnc, int Lac, int Cid)
 {
-    public static bool TryParse(string line, out Point point)
+    public static bool TryParse(string line, out Point? point)
     {
-        var delimiter = ',';
+        const char delimiter = ',';
         
-        var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
         var style = NumberStyles.Number;
 
         point = default;
         
         var parameters = line.Split(delimiter);
 
-        if (!DateTimeOffset.TryParse(parameters[0], CultureInfo.InvariantCulture, DateTimeStyles.None,  out var timeStamp))
+        if (!DateTime.TryParse(parameters[0], CultureInfo.InvariantCulture, DateTimeStyles.None,  out var timeStamp))
             return false;
         
-        if (!double.TryParse(parameters[1],style, formatter , out var latitude))
+        if (!double.TryParse(parameters[1],style, CultureInfo.InvariantCulture , out var latitude))
             return false;
 
-        if (!double.TryParse(parameters[2], style, formatter , out var longitude))
+        if (!double.TryParse(parameters[2], style, CultureInfo.InvariantCulture , out var longitude))
             return false;
         
         if (!int.TryParse(parameters[3], out var numberOfSatellites))
@@ -47,11 +46,28 @@ public record Point(DateTimeOffset TimeStamp, double Latitude, double Longitude,
 
     public override string ToString()
     {
-        var timeStamp = TimeStamp.ToString(CultureInfo.InvariantCulture);
-        var latitude = Latitude.ToString(CultureInfo.InvariantCulture);
-        var longitude = Longitude.ToString(CultureInfo.InvariantCulture);
+        const char delimiter = ',';
+        
+        var builder = new StringBuilder();
 
-        return $"{timeStamp},{latitude},{longitude},{NumberOfSatellites},{Mcc},{Mnc},{LacTacNid},{Cid}";
+        builder.Append(TimeStamp.ToString(CultureInfo.InvariantCulture));
+        builder.Append(delimiter);
+        builder.Append(Lat.ToString(CultureInfo.InvariantCulture));
+        builder.Append(delimiter);
+        builder.Append(Lng.ToString(CultureInfo.InvariantCulture));
+        builder.Append(delimiter);
+        builder.Append(NumberOfSatellites);
+        builder.Append(delimiter);
+        builder.Append(Mcc);
+        builder.Append(delimiter);
+        builder.Append(Mnc);
+        builder.Append(delimiter);
+        builder.Append(Lac);
+        builder.Append(delimiter);
+        builder.Append(Cid);
+
+
+        return builder.ToString();
     }
     
     public byte[] Serialize() => Encoding.UTF8.GetBytes(ToString());
