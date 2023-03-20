@@ -4,46 +4,32 @@ namespace ConsoleService.Services;
 
 public class LbsService
 {
-    private readonly Dictionary<LbsParameters, TowerParameters> _towers = GetTowers();
-
-    public Coordinates GetCoordinates(Point point)
+    private readonly Lazy<Dictionary<Lbs, TowerParameters>> _lazy = new(() =>
     {
-        if (point.Sat < 3)
+        var cells = new Dictionary<Lbs, TowerParameters>();
+
+        using var streamReader = File.OpenText("cells.csv");
+
+        while (streamReader.ReadLine() is { } line)
         {
-            if (_towers.TryGetValue(
-                    new LbsParameters(point.Mcc, point.Mnc, point.Lac, point.Cid),
-                    out var tower))
-                return new Coordinates(tower.Lat, tower.Lng);
+            if (TowerParameters.TryParse(line, out var cell))
+                cells.Add(new Lbs(cell.Mcc, cell.Mnc, cell.Lac, cell.Cid), cell);
         }
 
-        return new Coordinates(point.Lat, point.Lng);
-    }
+        return cells;
+    });
 
-    private static Dictionary<LbsParameters, TowerParameters> GetTowers()
+    private Dictionary<Lbs, TowerParameters> Cells => _lazy.Value;
+
+    public bool TryGetCoordinates(Point point, out Coordinates? coords)
     {
-        var towersArray = TestData.Towers.Split("\r\n");
+        coords = default;
 
-        var towers = new Dictionary<LbsParameters, TowerParameters>(towersArray.Length);
+        if (!Cells.TryGetValue(new Lbs(point.Lbs.Mcc, point.Lbs.Mnc, point.Lbs.Lac, point.Lbs.Cid), out var cell))
+            return false;
 
-        foreach (var tower in towersArray)
-        {
-            if (TowerParameters.TryParse(tower, out var towerParams))
-                towers.Add(new LbsParameters(towerParams.Mcc, towerParams.Mnc, towerParams.Lac,
-                    towerParams.Cid), towerParams);
-        }
-
-        return towers;
+        coords = new Coordinates(cell.Lat, cell.Lng);
+        
+        return true;
     }
-
-    public LbsParameters FindLbs(Point point)
-    {
-        var (_, value) = _towers.MinBy(tower =>
-            CalculateDistance(tower.Value.Lat, point.Lat, tower.Value.Lng, point.Lng));
-
-        return new LbsParameters(value.Mcc, value.Mnc, value.Lac, value.Cid);
-    }
-
-    private double CalculateDistance(double x1, double x2, double y1, double y2) =>
-        Math.Pow(x1 - x2, 2) +
-        Math.Pow(y1 - y2, 2);
 }
