@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.Globalization;
 
 namespace ConsoleService.Models;
 
@@ -6,14 +6,9 @@ public record Coordinates(double Lat, double Lng)
 {
     public override string ToString()
     {
-        const char delimiter = ',';
-        
-        var sb = new StringBuilder();
+        var latString = Lat.ToString(CultureInfo.InvariantCulture);
+        var lngString = Lng.ToString(CultureInfo.InvariantCulture);
 
-        sb.Append(Lat);
-        sb.Append(delimiter);
-        sb.Append(Lng);
-
-        return sb.ToString();
+        return $"{latString},{lngString}";
     }
 }
