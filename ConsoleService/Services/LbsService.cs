@@ -35,7 +35,7 @@ public class LbsService
         return towers;
     }
 
-    public LbsParameters GetLbsOfNearestTower(Point point)
+    public LbsParameters FindLbs(Point point)
     {
         var (_, value) = _towers.MinBy(tower =>
             CalculateDistance(tower.Value.Lat, point.Lat, tower.Value.Lng, point.Lng));
