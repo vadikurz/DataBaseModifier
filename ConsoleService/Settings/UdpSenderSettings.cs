@@ -1,6 +1,6 @@
 ﻿namespace ConsoleService.Settings;
 
-public class UdpSettings
+public class UdpSenderSettings
 {
     public string Ip { get; set; }
     
