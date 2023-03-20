@@ -22,11 +22,11 @@ public class PointTests
         var result = Point.TryParse(testString, out var resultPoint);
 
         Assert.IsTrue(result);
-        Assert.AreEqual(timeStamp, resultPoint.TimeStamp);
-        Assert.AreEqual(timeStamp.Kind, resultPoint.TimeStamp.Kind);
+        Assert.AreEqual(timeStamp, resultPoint.Time);
+        Assert.AreEqual(timeStamp.Kind, resultPoint.Time.Kind);
         Assert.AreEqual(Lat, resultPoint.Lat);
         Assert.AreEqual(Lng, resultPoint.Lng);
-        Assert.AreEqual(NumberOfSatellites, resultPoint.NumberOfSatellites);
+        Assert.AreEqual(NumberOfSatellites, resultPoint.Sat);
         Assert.AreEqual(Mcc, resultPoint.Mcc);
         Assert.AreEqual(Mnc, resultPoint.Mnc);
         Assert.AreEqual(Lac, resultPoint.Lac);

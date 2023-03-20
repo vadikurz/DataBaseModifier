@@ -32,7 +32,7 @@ public class UdpSender : ApplicationBackgroundService
                 {
                     if (i > 0)
                     {
-                        var delay = points[i].TimeStamp - points[i - 1].TimeStamp;
+                        var delay = points[i].Time - points[i - 1].Time;
                         await Task.Delay(delay, stoppingToken);
                     }
                 

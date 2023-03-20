@@ -8,7 +8,7 @@ public class LbsService
 
     public Coordinates GetCoordinates(Point point)
     {
-        if (point.NumberOfSatellites < 3)
+        if (point.Sat < 3)
         {
             if (_towers.TryGetValue(
                     new LbsParameters(point.Mcc, point.Mnc, point.Lac, point.Cid),
