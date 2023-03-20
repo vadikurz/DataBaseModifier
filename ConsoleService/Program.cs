@@ -17,8 +17,9 @@ public class Program
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.Configure<UdpSettings>(configuration.GetSection("UdpSettings"));
-                services.Configure<DataSourceSettings>(configuration.GetSection("DataSourceSettings"));
+                services.Configure<UdpSenderSettings>(configuration.GetSection("UdpSenderSettings"));
+                services.Configure<UdpReceiverSettings>(configuration.GetSection("UdpReceiverSettings"));
+                services.AddSingleton<LbsService>();
                 services.AddHostedService<UdpSender>();
                 services.AddHostedService<UdpReceiver>();
             })
