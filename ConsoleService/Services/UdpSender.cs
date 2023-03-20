@@ -8,49 +8,56 @@ namespace ConsoleService.Services;
 
 public class UdpSender : ApplicationBackgroundService
 {
-    private readonly UdpClient _client;
-    private readonly string _pathToObjectPoints;
+    private readonly string _ip;
+    private readonly int _port;
 
-    public UdpSender(IHostApplicationLifetime lifetime, IOptions<UdpSettings> udpSettings,
-        IOptions<DataSourceSettings> dataSourceSettings) : base(lifetime)
+    public UdpSender(IHostApplicationLifetime lifetime, IOptions<UdpSenderSettings> udpSenderSettings) : base(lifetime)
     {
-        _client = new UdpClient(udpSettings.Value.Ip, udpSettings.Value.Port);
-        _pathToObjectPoints = dataSourceSettings.Value.ObjectCoordinatesFilePath;
+        _ip = udpSenderSettings.Value.Ip;
+        _port = udpSenderSettings.Value.Port;
+
     }
 
-    protected override async Task ExecuteOnApplicationStartAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteInternalAsync(CancellationToken stoppingToken)
     {
-        var objectPoints = await GetListOfObjectPoints(_pathToObjectPoints);
-
-        while (!stoppingToken.IsCancellationRequested)
+        try
         {
-            for (var i = 0; i < objectPoints.Count; i++)
+            using var client = new UdpClient(_ip, _port);
+        
+            var points = GetPoints();
+
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var data = objectPoints[i].Serialize();
-
-                await _client.SendAsync(data, stoppingToken);
-
-                if (i == objectPoints.Count - 1) continue;
-
-                var timeBetweenPoints = objectPoints[i + 1].TimeStamp.Subtract(objectPoints[i].TimeStamp);
-
-                await Task.Delay(timeBetweenPoints, stoppingToken);
+                for (var i = 0; i < points.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        var delay = points[i].TimeStamp - points[i - 1].TimeStamp;
+                        await Task.Delay(delay, stoppingToken);
+                    }
+                
+                    await client.SendAsync(points[i].Serialize(), stoppingToken);
+                }
             }
         }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
     }
 
-    private async Task<List<Point>> GetListOfObjectPoints(string pathToObjectCoordinates)
+    private List<Point> GetPoints()
     {
-        var listOfObjectCoordinates = new List<Point>();
+        var pointsArray = TestData.Points.Split("\r\n");
+        
+        var points = new List<Point>(pointsArray.Length);
 
-        var streamReader = File.OpenText(pathToObjectCoordinates);
-
-        while (await streamReader.ReadLineAsync() is { } line)
+        foreach (var point in pointsArray)
         {
-            if (Point.TryParse(line, out var point))
-                listOfObjectCoordinates.Add(point);
+            if (Point.TryParse(point, out var resultPoint))
+                points.Add(resultPoint!);
         }
-
-        return listOfObjectCoordinates;
+        
+        return points;
     }
 }
