@@ -3,8 +3,7 @@ using System.Text;
 
 namespace ConsoleService.Models;
 
-public record Point(DateTime Time, double Lat, double Lng, int Sat, int Mcc, int Mnc, int Lac,
-    int Cid)
+public record Point(DateTime Time, Coordinates Coords, int Sat, Lbs Lbs)
 {
     public static bool TryParse(string line, out Point? point)
     {
@@ -22,7 +21,7 @@ public record Point(DateTime Time, double Lat, double Lng, int Sat, int Mcc, int
             !int.TryParse(parameters[7], out var cid))
             return false;
 
-        point = new Point(timeStamp, lat, lng, sat, mcc, mnc, lac, cid);
+        point = new Point(timeStamp, new Coordinates(lat, lng), sat, new Lbs(mcc, mnc, lac, cid));
 
         return true;
     }
@@ -35,19 +34,11 @@ public record Point(DateTime Time, double Lat, double Lng, int Sat, int Mcc, int
 
         builder.Append(Time.ToString(CultureInfo.InvariantCulture));
         builder.Append(delimiter);
-        builder.Append(Lat.ToString(CultureInfo.InvariantCulture));
-        builder.Append(delimiter);
-        builder.Append(Lng.ToString(CultureInfo.InvariantCulture));
+        builder.Append(Coords);
         builder.Append(delimiter);
         builder.Append(Sat);
         builder.Append(delimiter);
-        builder.Append(Mcc);
-        builder.Append(delimiter);
-        builder.Append(Mnc);
-        builder.Append(delimiter);
-        builder.Append(Lac);
-        builder.Append(delimiter);
-        builder.Append(Cid);
+        builder.Append(Lbs);
 
         return builder.ToString();
     }
