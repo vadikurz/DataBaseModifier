@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseModifier", "DataBaseModifier\DataBaseModifier.csproj", "{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService", "ConsoleService\ConsoleService.csproj", "{E0BE37D7-3014-4002-8FD5-9807A2EB080F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataGenerator", "TestDataGenerator\TestDataGenerator.csproj", "{6310B392-28B8-4210-B718-00053142E4CB}"
@@ -20,10 +18,6 @@ Global
 		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA036C6-7D6F-49B6-A7BF-497EF93CAE6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8A06C40-7DE7-4F1F-AA9F-B19A48B6FB3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0BE37D7-3014-4002-8FD5-9807A2EB080F}.Release|Any CPU.ActiveCfg = Release|Any CPU
