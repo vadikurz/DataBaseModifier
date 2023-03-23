@@ -13,21 +13,21 @@ public class UdpReceiver : BackgroundService
     private readonly ILogger<UdpReceiver> _logger;
     private readonly LbsService _lbsService;
     private readonly UdpReceiverSettings _settings;
-    private readonly WaitingForAppStartupService _upService;
+    private readonly WaitingForAppStartupService _waitingService;
 
-    public UdpReceiver(WaitingForAppStartupService upService, IOptions<UdpReceiverSettings> settings, ILogger<UdpReceiver> logger, LbsService lbsService)
+    public UdpReceiver(WaitingForAppStartupService waitingService, IOptions<UdpReceiverSettings> settings, ILogger<UdpReceiver> logger, LbsService lbsService)
     {
         _logger = logger;
         _settings = settings.Value;
         _lbsService = lbsService;
-        _upService = upService;
+        _waitingService = waitingService;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
-            if (!await _upService.WaitForAppStartup(stoppingToken))
+            if (!await _waitingService.WaitForAppStartup(stoppingToken))
             {
                 return;
             }
