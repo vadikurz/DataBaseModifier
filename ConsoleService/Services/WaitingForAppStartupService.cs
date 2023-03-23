@@ -2,28 +2,16 @@
 
 namespace ConsoleService.Services;
 
-public abstract class ApplicationBackgroundService : BackgroundService
+public class WaitingForAppStartupService
 {
     private readonly IHostApplicationLifetime _lifetime;
     
-    protected ApplicationBackgroundService(IHostApplicationLifetime lifetime)
+    public WaitingForAppStartupService(IHostApplicationLifetime lifetime)
     {
         _lifetime = lifetime;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        if (!await WaitForAppStartup(stoppingToken))
-        {
-            return;
-        }
-
-        await ExecuteInternalAsync(stoppingToken);
-    }
-
-    protected abstract Task ExecuteInternalAsync(CancellationToken stoppingToken);
-
-    private async Task<bool> WaitForAppStartup(CancellationToken stoppingToken)
+    public async Task<bool> WaitForAppStartup(CancellationToken stoppingToken)
     {
         var startedSource = new TaskCompletionSource();
         var cancelledSource = new TaskCompletionSource();

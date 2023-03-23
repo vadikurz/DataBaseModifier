@@ -6,19 +6,26 @@ using Microsoft.Extensions.Options;
 
 namespace ConsoleService.Services;
 
-public class UdpSender : ApplicationBackgroundService
+public class UdpSender : BackgroundService
 {
-    private readonly UdpSenderSettings _udpSenderSettings; 
+    private readonly UdpSenderSettings _udpSenderSettings;
+    private readonly WaitingForAppStartupService _waitingUpService;
 
-    public UdpSender(IHostApplicationLifetime lifetime, IOptions<UdpSenderSettings> udpSenderSettings) : base(lifetime)
+    public UdpSender(WaitingForAppStartupService waitingUpService, IOptions<UdpSenderSettings> udpSenderSettings)
     {
         _udpSenderSettings = udpSenderSettings.Value;
+        _waitingUpService = waitingUpService;
     }
 
-    protected override async Task ExecuteInternalAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
+            if (!await _waitingUpService.WaitForAppStartup(stoppingToken))
+            {
+                return;
+            }
+            
             using var client = new UdpClient(_udpSenderSettings.Ip, _udpSenderSettings.Port);
 
             var points = GetPoints();

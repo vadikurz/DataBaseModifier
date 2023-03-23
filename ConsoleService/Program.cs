@@ -20,6 +20,7 @@ public class Program
                 services.Configure<UdpSenderSettings>(configuration.GetSection("UdpSenderSettings"));
                 services.Configure<UdpReceiverSettings>(configuration.GetSection("UdpReceiverSettings"));
                 services.AddSingleton<LbsService>();
+                services.AddSingleton<WaitingForAppStartupService>();
                 services.AddHostedService<UdpSender>();
                 services.AddHostedService<UdpReceiver>();
             })
