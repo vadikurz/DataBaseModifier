@@ -24,13 +24,13 @@ public class PointTests
         Assert.IsTrue(result);
         Assert.AreEqual(timeStamp, resultPoint.Time);
         Assert.AreEqual(timeStamp.Kind, resultPoint.Time.Kind);
-        Assert.AreEqual(Lat, resultPoint.Lat);
-        Assert.AreEqual(Lng, resultPoint.Lng);
+        Assert.AreEqual(Lat, resultPoint.Coords.Lat);
+        Assert.AreEqual(Lng, resultPoint.Coords.Lng);
         Assert.AreEqual(NumberOfSatellites, resultPoint.Sat);
-        Assert.AreEqual(Mcc, resultPoint.Mcc);
-        Assert.AreEqual(Mnc, resultPoint.Mnc);
-        Assert.AreEqual(Lac, resultPoint.Lac);
-        Assert.AreEqual(Cid, resultPoint.Cid);
+        Assert.AreEqual(Mcc, resultPoint.Lbs.Mcc);
+        Assert.AreEqual(Mnc, resultPoint.Lbs.Mnc);
+        Assert.AreEqual(Lac, resultPoint.Lbs.Lac);
+        Assert.AreEqual(Cid, resultPoint.Lbs.Cid);
     }
 
     [Test]
