@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataGenerator", "TestDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService.Unit.Tests", "ConsoleService.Unit.Tests\ConsoleService.Unit.Tests.csproj", "{808FECF7-E368-4092-9726-B146034B97F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleService.Integration.Tests", "ConsoleService.Integration.Tests\ConsoleService.Integration.Tests.csproj", "{972DD39E-CD28-437D-B158-BE675B3DA30F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{882B42BF-A248-4A31-A11F-54364EE2891E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{808FECF7-E368-4092-9726-B146034B97F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808FECF7-E368-4092-9726-B146034B97F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808FECF7-E368-4092-9726-B146034B97F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{972DD39E-CD28-437D-B158-BE675B3DA30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{972DD39E-CD28-437D-B158-BE675B3DA30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{972DD39E-CD28-437D-B158-BE675B3DA30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{972DD39E-CD28-437D-B158-BE675B3DA30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882B42BF-A248-4A31-A11F-54364EE2891E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882B42BF-A248-4A31-A11F-54364EE2891E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882B42BF-A248-4A31-A11F-54364EE2891E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882B42BF-A248-4A31-A11F-54364EE2891E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
