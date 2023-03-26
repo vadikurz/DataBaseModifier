@@ -42,6 +42,4 @@ public record Point(DateTime Time, Coordinates Coords, int Sat, Lbs Lbs)
 
         return builder.ToString();
     }
-
-    public byte[] Serialize() => Encoding.UTF8.GetBytes(ToString());
 }

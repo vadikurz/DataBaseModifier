@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common;
@@ -61,7 +62,7 @@ public class UdpSender : BackgroundService
                         await Task.Delay(delay, stoppingToken);
                     }
 
-                    await client.SendAsync(Points[i].Serialize(), stoppingToken);
+                    await client.SendAsync(Encoding.UTF8.GetBytes(Points[i].ToString()), stoppingToken);
                 }
             }
         }
