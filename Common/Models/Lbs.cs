@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ConsoleService.Models;
+namespace Common.Models;
 
 public record Lbs(int Mcc, int Mnc, int Lac, int Cid)
 {

@@ -1,4 +1,4 @@
-﻿using ConsoleService.Models;
+﻿using Common.Models;
 
 namespace ConsoleService.Services;
 

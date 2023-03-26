@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace ConsoleService.Services;
+namespace Common;
 
 public class WaitingForAppStartupService
 {

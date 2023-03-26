@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace ConsoleService.Models;
+namespace Common.Models;
 
 public record Point(DateTime Time, Coordinates Coords, int Sat, Lbs Lbs)
 {

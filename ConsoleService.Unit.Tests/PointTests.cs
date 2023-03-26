@@ -1,5 +1,5 @@
 using System;
-using ConsoleService.Models;
+using Common.Models;
 using NUnit.Framework;
 
 namespace ConsoleService.Unit.Tests;

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace ConsoleService.Models;
+namespace Common.Models;
 
 public record TowerParameters(int Mcc, int Mnc, int Lac, int Cid, double Lat, double Lng)
 {
