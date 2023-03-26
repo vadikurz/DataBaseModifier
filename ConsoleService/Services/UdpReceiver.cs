@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Text;
-using ConsoleService.Models;
+using Common;
+using Common.Models;
 using ConsoleService.Settings;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -32,11 +33,12 @@ public class UdpReceiver : BackgroundService
                 return;
             }
             
-            using var client = new UdpClient(_settings.Port);
+            using var receiver = new UdpClient(_settings.ListeningPort);
+            using var sender = new UdpClient(_settings.Ip, _settings.SendingPort);
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                var result = await client.ReceiveAsync(stoppingToken);
+                var result = await receiver.ReceiveAsync(stoppingToken);
 
                 var message = Encoding.UTF8.GetString(result.Buffer);
 
@@ -45,6 +47,8 @@ public class UdpReceiver : BackgroundService
                     if (_lbsService.TryGetCoordinates(point!, out var coords))
                     {
                         _logger.LogInformation(coords.ToString());
+
+                        await sender.SendAsync(Encoding.UTF8.GetBytes(coords.ToString()), stoppingToken);
                     }
                 }
             }
