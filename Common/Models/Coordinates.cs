@@ -18,8 +18,8 @@ public record Coordinates(double Lat, double Lng)
 
         var parameters = line.Split(',');
 
-        if (!double.TryParse(parameters[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var lat)||
-            !double.TryParse(parameters[2], NumberStyles.Number, CultureInfo.InvariantCulture, out var lng))
+        if (!double.TryParse(parameters[0], NumberStyles.Number, CultureInfo.InvariantCulture, out var lat)||
+            !double.TryParse(parameters[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var lng))
             return false;
 
         coords = new Coordinates(lat, lng);
