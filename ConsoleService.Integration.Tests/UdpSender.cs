@@ -64,6 +64,7 @@ public class UdpSender : BackgroundService
 
                     await client.SendAsync(Encoding.UTF8.GetBytes(Points[i].ToString()), stoppingToken);
                 }
+                return;
             }
         }
         catch (OperationCanceledException exception)
